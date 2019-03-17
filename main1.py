@@ -21,25 +21,28 @@ def sq(d, n):
     return sq(d*0.9, n-1)
 
 
-def tree(d, n):
-    """ Draw a binary tree. """
-    # TODO
+def tree(size, n):
+    """ Turn turtle for drawing tree. """
+    trt.left(90)
+    help_tree(n, size)
+
+
+def help_tree(n, size):
+    """ Drawing binary tree. """
     if n == 0:
-        return
-    trt.forward(100)
-    trt.right(45)
-    trt.forward(50)
-    trt.right(180)
-    trt.forward(50)
-    trt.right(90)
-    trt.forward(50)
-    trt.left(180)
-    trt.forward(50)
-    trt.right(45)
-    trt.forward(100)
-    trt.left(180)
-    trt.left(45)
-    tree(d, n-1)
+        trt.forward(size)
+    else:
+        trt.forward(size)
+        trt.right(30)
+        help_tree(n - 1, size/2)
+        trt.right(180)
+        help_tree(n - 1, size/2)
+        trt.right(120)
+        help_tree(n - 1, size/2)
+        trt.right(180)
+        help_tree(n - 1, size/2)
+        trt.right(30)
+        trt.forward(size)
 
 
 def branch(n, size):
@@ -117,13 +120,26 @@ def mink(order, size):
         mink(order - 1, size / 3)
 
 
+def lev(n, size):
+  if n == 0:
+    trt.forward(size)
+  else:
+    trt.left(45)
+    lev(n-1, size)
+    trt.right(90)
+    lev(n-1, size)
+    trt.left(45)
+
+
 def place(num):
     """ Put the turtle in the right place. """
-    if num in {'3','2', '1'}:
+    if num in {'3', '1'}:
         trt.up()
         trt.goto(0, -100)
         trt.down()
         trt.left(90)
+    elif num == '2':
+        trt.right(0)
     elif num == '4':
         trt.up()
         trt.goto(-300, 0)
@@ -154,36 +170,42 @@ def main():
     screen = trt.getscreen()
     answer = screen.textinput('Welcome!', ru.WELCOME)
 
-    if answer.startswith('1') or answer is None:
+    if answer == '1':
         data = get_data(100, 20)
         place('1')
         sq(data['size'], data['depth'])
         trt.done()
-    elif answer.startswith('2'):
-        data = get_data(100, 20)
+    elif answer == '2':
+        data = get_data(100, 4)
         place('2')
         tree(data['size'], data['depth'])
         trt.done()
-    elif answer.startswith('3'):
+    elif answer == '3':
         data = get_data(400, 3)
         place('3')
         branch(data['depth'], data['size'])
         trt.done()
-    elif answer.startswith('4'):
+    elif answer == '4':
         data = get_data(500, 3)
         place('4')
         koch(data['depth'], data['size'])
         trt.done()
-    elif answer.startswith('5'):
+    elif answer == '5':
         data = get_data(100, 3)
         place('5')
         snowflake(data['depth'], data['size'])
         trt.done()
-    elif answer.startswith('6'):
+    elif answer == '6':
         data = get_data(200, 3)
         place('6')
         mink(data['depth'], data['size'])
         trt.done()
+    elif answer == '10':
+        data = get_data(20, 7)
+        place('6')
+        lev(data['depth'], data['size'])
+        trt.done()
+
 
 if __name__ == '__main__':
     main()
