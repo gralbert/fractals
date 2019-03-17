@@ -120,15 +120,63 @@ def mink(order, size):
         mink(order - 1, size / 3)
 
 
+def ice_fractal(d, n):
+    """ Drawing ice fractal №1. """
+    if n == 0:
+        trt.forward(d)
+    else:
+        ice_fractal(d/2, n-1)
+        trt.left(90)
+        ice_fractal(d/4, n-1)
+        trt.right(180)
+        ice_fractal(d/4, n-1)
+        trt.left(90)
+        ice_fractal(d/2, n-1)
+
+
+def ice_2fractal(d, n):
+    """ Drawing ice fractal №2. """
+    if n == 0:
+        trt.forward(d)
+    else:
+        ice_2fractal(d/2, n-1)
+        trt.left(120)
+        ice_2fractal(d/4, n-1)
+        trt.left(180)
+        ice_2fractal(d/4, n-1)
+        trt.left(120)
+        ice_2fractal(d/4, n-1)
+        trt.left(180)
+        ice_2fractal(d/4, n-1)
+        trt.left(120)
+        ice_2fractal(d/2, n-1)
+
+
+def ice_snowflake(d, n):
+    """ Drawing ice snowflake. """
+    ice_fractal(d, n-1)
+    trt.right(120)
+    ice_fractal(d, n-1)
+    trt.right(120)
+    ice_fractal(d, n-1)
+    trt.left(180)
+    ice_fractal(d, n-1)
+    trt.left(120)
+    ice_fractal(d, n-1)
+    trt.left(120)
+    ice_fractal(d, n-1)
+
+
 def lev(n, size):
-  if n == 0:
-    trt.forward(size)
-  else:
-    trt.left(45)
-    lev(n-1, size)
-    trt.right(90)
-    lev(n-1, size)
-    trt.left(45)
+    """ Drawing Levi curve. """
+    if n == 0:
+        trt.forward(size)
+    else:
+        trt.left(45)
+        lev(n-1, size)
+        trt.right(90)
+        lev(n-1, size)
+        trt.left(45)
 
 
 def place(num):
@@ -151,6 +199,10 @@ def place(num):
     elif num == '6':
         trt.up()
         trt.backward(200)
+        trt.down()
+    elif num in {'7','8', '9'}:
+        trt.up()
+        trt.goto(-200, 0)
         trt.down()
 
 
@@ -199,6 +251,21 @@ def main():
         data = get_data(200, 3)
         place('6')
         mink(data['depth'], data['size'])
+        trt.done()
+    elif answer == '7':
+        data = get_data(50, 3)
+        place('7')
+        ice_fractal(data['size']*10, data['depth'])
+        trt.done()
+    elif answer == '8':
+        data = get_data(50, 3)
+        place('7')
+        ice_2fractal(data['size']*10, data['depth'])
+        trt.done()
+    elif answer == '9':
+        data = get_data(150, 3)
+        place('7')
+        ice_snowflake(data['size'], data['depth'])
         trt.done()
     elif answer == '10':
         data = get_data(20, 7)
