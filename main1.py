@@ -179,6 +179,27 @@ def lev(n, size):
         trt.left(45)
 
 
+def dragon(n, size,k):
+    """ Draw dragon. """
+    if n == 0:
+        trt.forward(size)
+    else:
+        if k == 1:
+            trt.left(45)
+        else:
+            trt.right(45)
+        dragon(n - 1, size / 2 ** 0.5,1)
+        if k == 1:
+            trt.right(90)
+        else:
+            trt.left(90)
+        dragon(n - 1, size / 2 ** 0.5,-1)
+        if k == 1:
+            trt.left(45)
+        else:
+            trt.right(45)
+
+
 def place(num):
     """ Put the turtle in the right place. """
     if num in {'3', '1'}:
@@ -217,7 +238,8 @@ def get_data(_size, _depth):
 
 def main():
     """ Main function. """
-    trt.speed(0)
+    trt.hideturtle()
+    trt.tracer(0)
 
     screen = trt.getscreen()
     answer = screen.textinput('Welcome!', ru.WELCOME)
@@ -226,53 +248,59 @@ def main():
         data = get_data(100, 20)
         place('1')
         sq(data['size'], data['depth'])
-        trt.done()
+
     elif answer == '2':
         data = get_data(100, 4)
         place('2')
         tree(data['size'], data['depth'])
-        trt.done()
+
     elif answer == '3':
         data = get_data(400, 3)
         place('3')
         branch(data['depth'], data['size'])
-        trt.done()
+
     elif answer == '4':
         data = get_data(500, 3)
         place('4')
         koch(data['depth'], data['size'])
-        trt.done()
+
     elif answer == '5':
         data = get_data(100, 3)
         place('5')
         snowflake(data['depth'], data['size'])
-        trt.done()
+
     elif answer == '6':
         data = get_data(200, 3)
         place('6')
         mink(data['depth'], data['size'])
-        trt.done()
+
     elif answer == '7':
         data = get_data(50, 3)
         place('7')
         ice_fractal(data['size']*10, data['depth'])
-        trt.done()
+
     elif answer == '8':
         data = get_data(50, 3)
         place('7')
         ice_2fractal(data['size']*10, data['depth'])
-        trt.done()
+
     elif answer == '9':
         data = get_data(150, 3)
         place('7')
         ice_snowflake(data['size'], data['depth'])
-        trt.done()
+
     elif answer == '10':
         data = get_data(20, 7)
         place('6')
         lev(data['depth'], data['size'])
-        trt.done()
 
+    elif answer == '11':
+        data = get_data(200, 12)
+        place('6')
+        dragon(data['depth'], data['size'],1)
+
+    trt.update()
+    trt.mainloop()
 
 if __name__ == '__main__':
     main()
